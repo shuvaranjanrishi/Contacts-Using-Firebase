@@ -51,12 +51,10 @@ public class AddContactActivity extends AppCompatActivity {
 
     private void insertData(String name, String phoneNo) {
 
-        DatabaseReference userRef = databaseReference.child("user");
-        Toast.makeText(AddContactActivity.this, "insert Called"+userRef.toString(), Toast.LENGTH_SHORT).show();
+        DatabaseReference userRef = databaseReference.child("users");
+        Toast.makeText(AddContactActivity.this, "insert Called "+userRef.toString(), Toast.LENGTH_SHORT).show();
 
-        HashMap<String,Object> contact = new HashMap<>();
-        contact.put("Name",name);
-        contact.put("PhoneNo",phoneNo);
+        Contact contact = new Contact(name,phoneNo);
 
         userRef.push().setValue(contact).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -64,9 +62,6 @@ public class AddContactActivity extends AppCompatActivity {
 
                 if(task.isSuccessful()){
                     Toast.makeText(AddContactActivity.this, "Contact Saved Successfully", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(AddContactActivity.this, "Contact Saved not Successfully", Toast.LENGTH_SHORT).show();
-
                 }
 
             }
