@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".AddContactActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow>
+            <TextView
+                android:text="Name:"
+                android:textColor="#000000"
+                android:textSize="18sp"></TextView>
+            <EditText
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/nameETId"
+                android:hint="Enter Your Name"></EditText>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="Phone No:"
+                android:textColor="#000000"
+                android:textSize="18sp"></TextView>
+            <EditText
+                android:inputType="number"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/phoneNoETId"
+                android:hint="Enter Your Name"></EditText>
+        </TableRow>
+        <TableRow
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+            <Button
+                android:onClick="saveContactBtnAction"
+                android:text="Save Contact"
+                android:textAllCaps="false"></Button>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
