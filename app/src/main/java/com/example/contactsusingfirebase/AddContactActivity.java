@@ -81,6 +81,9 @@ public class AddContactActivity extends AppCompatActivity {
         }else if(phoneNo.isEmpty()){
             phoneNoET.setError("Please give a phone number");
             return false;
+        }else if(phoneNo.charAt(0) != '0' || phoneNo.charAt(1) != '1'){
+            phoneNoET.setError("Invalid Phone No (must be 01 first)");
+            return false;
         }else if(phoneNo.length() != 11){
             phoneNoET.setError("Phone number should be 11 digit");
             return false;
