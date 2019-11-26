@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,6 +16,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -45,14 +48,37 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void signUp(String name, String email, String password) {
+    private void signUp(final String name, final String email, final String password) {
 
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if(task.isSuccessful()){
-                    Toast.makeText(SignUpActivity.this, "user created", Toast.LENGTH_SHORT).show();
+
+                    String userId = firebaseAuth.getUid();
+                    DatabaseReference userRef = databaseReference.child("users").child(userId);
+
+                    HashMap<String,Object> user = new HashMap<>();
+                    user.put("name",name);
+                    user.put("email",email);
+
+                    userRef.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            Toast.makeText(SignUpActivity.this, "Sign Up Successful", Toast.LENGTH_LONG).show();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
                 }
 
             }
@@ -62,7 +88,8 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        
+
+
     }
 
     private boolean validate(String name, String email, String password) {
