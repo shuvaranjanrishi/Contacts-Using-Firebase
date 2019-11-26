@@ -1,14 +1,26 @@
 package com.example.contactsusingfirebase;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText nameET,emailET,passwordET;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +47,22 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void signUp(String name, String email, String password) {
 
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
 
+                if(task.isSuccessful()){
+                    Toast.makeText(SignUpActivity.this, "user created", Toast.LENGTH_SHORT).show();
+                }
 
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        
     }
 
     private boolean validate(String name, String email, String password) {
@@ -70,6 +96,8 @@ public class SignUpActivity extends AppCompatActivity {
         nameET = findViewById(R.id.nameETId);
         emailET = findViewById(R.id.emailETId);
         passwordET = findViewById(R.id.passwordETId);
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
 }
