@@ -28,7 +28,15 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }else {
 
+            signUp(name,email,password);
+
         }
+    }
+
+    private void signUp(String name, String email, String password) {
+
+
+
     }
 
     private boolean validate(String name, String email, String password) {
