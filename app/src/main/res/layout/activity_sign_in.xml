@@ -5,9 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:padding="10dp"
+    android:orientation="vertical"
     tools:context=".SignInActivity">
+
+    <TextView
+        android:textSize="50dp"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_marginBottom="100dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></TextView>
 
     <TableLayout
         android:layout_width="match_parent"
@@ -28,6 +37,7 @@
                 android:textColor="#000000"
                 android:text="Password: "></TextView>
             <EditText
+                android:inputType="textPassword"
                 android:id="@+id/passwordETId"
                 android:hint="enter password"
                 android:layout_marginLeft="10dp"
@@ -37,6 +47,7 @@
             android:gravity="center"
             android:layout_marginTop="10dp">
             <Button
+                android:onClick="signInBtnClickAction"
                 android:text="Sign In"
                 android:textAllCaps="false"
                 android:layout_gravity="center"></Button>

@@ -3,6 +3,7 @@ package com.example.contactsusingfirebase;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -67,7 +68,10 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
-                            Toast.makeText(SignUpActivity.this, "Sign Up Successful", Toast.LENGTH_LONG).show();
+                            if(task.isSuccessful()){
+                                Toast.makeText(SignUpActivity.this, "Sign Up Successful", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(SignUpActivity.this,SignInActivity.class));
+                            }
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
