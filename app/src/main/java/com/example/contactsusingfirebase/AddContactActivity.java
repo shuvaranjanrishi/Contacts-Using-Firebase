@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -19,6 +20,7 @@ import java.util.HashMap;
 public class AddContactActivity extends AppCompatActivity {
 
     private EditText nameET,phoneNoET;
+    private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
     @Override
@@ -26,13 +28,7 @@ public class AddContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
-        init();
-    }
-
-    private void init() {
-        nameET = findViewById(R.id.nameETId);
-        phoneNoET = findViewById(R.id.phoneNoETId);
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        initialize();
     }
 
     public void saveContactBtnAction(View view) {
@@ -51,8 +47,9 @@ public class AddContactActivity extends AppCompatActivity {
 
     private void insertData(String name, String phoneNo) {
 
-        DatabaseReference userRef = databaseReference.child("users");
-        Toast.makeText(AddContactActivity.this, "insert Called "+userRef.toString(), Toast.LENGTH_SHORT).show();
+        String userId = firebaseAuth.getCurrentUser().getUid();
+
+        DatabaseReference userRef = databaseReference.child("users").child(userId).child("contacts");
 
         Contact contact = new Contact(name,phoneNo);
 
@@ -84,11 +81,21 @@ public class AddContactActivity extends AppCompatActivity {
         }else if(phoneNo.isEmpty()){
             phoneNoET.setError("Please give a phone number");
             return false;
+        }else if(phoneNo.charAt(0) != '0' || phoneNo.charAt(1) != '1'){
+            phoneNoET.setError("Invalid Phone No (must be 01 first)");
+            return false;
         }else if(phoneNo.length() != 11){
             phoneNoET.setError("Phone number should be 11 digit");
             return false;
         }
 
         return true;
+    }
+
+    private void initialize() {
+        nameET = findViewById(R.id.nameETId);
+        phoneNoET = findViewById(R.id.phoneNoETId);
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 }
