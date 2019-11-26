@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="10dp"
+    tools:context=".SignInActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow>
+            <TextView
+                android:textColor="#000000"
+                android:text="Email: "></TextView>
+            <EditText
+                android:id="@+id/emailETId"
+                android:hint="enter your email address"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="2"></EditText>
+        </TableRow>
+        <TableRow android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="#000000"
+                android:text="Password: "></TextView>
+            <EditText
+                android:id="@+id/passwordETId"
+                android:hint="enter password"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"></EditText>
+        </TableRow>
+        <TableRow
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+            <Button
+                android:text="Sign In"
+                android:textAllCaps="false"
+                android:layout_gravity="center"></Button>
+        </TableRow>
+        <TableRow
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Have No Account?"></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:gravity="right"
+                android:textColor="#E42727"
+                android:onClick="SignUpTVClickAction"
+                android:text="SignUp"
+                android:textSize="20sp"></TextView>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
