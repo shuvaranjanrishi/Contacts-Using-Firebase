@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageViewId"
+        android:layout_marginBottom="20dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="150dp"
+        android:layout_height="150dp"></ImageView>
+    <TextView
+        android:layout_marginBottom="10dp"
+        android:id="@+id/nameTVId"
+        android:text="Name"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></TextView>
+    <TextView
+        android:layout_marginBottom="10dp"
+        android:id="@+id/phoneNoTVId"
+        android:text="Phone Number"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></TextView>
+    <Button
+        android:onClick="deleteBtnClickAction"
+        android:background="#EE7D7D"
+        android:text="Delete Contact"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Button>
+
+</LinearLayout>
