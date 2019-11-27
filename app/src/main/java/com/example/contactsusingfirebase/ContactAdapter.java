@@ -1,6 +1,7 @@
 package com.example.contactsusingfirebase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,10 +36,22 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Contact contact = contactList.get(position);
+        final Contact contact = contactList.get(position);
 
         holder.nameTV.setText(contact.getName());
         holder.phoneNoTV.setText(contact.getPhoneNo());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context,ShowDetailsActivity.class);
+                intent.putExtra("NAME",contact.getName());
+                intent.putExtra("PHONE_NO",contact.getPhoneNo());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
