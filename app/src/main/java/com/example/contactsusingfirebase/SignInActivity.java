@@ -86,7 +86,7 @@ public class SignInActivity extends AppCompatActivity {
         return true;
     }
 
-    public void SignUpTVClickAction(View view) {
+    public void signUpBtnClickAction(View view) {
         startActivity(new Intent(SignInActivity.this,SignUpActivity.class));
     }
 
