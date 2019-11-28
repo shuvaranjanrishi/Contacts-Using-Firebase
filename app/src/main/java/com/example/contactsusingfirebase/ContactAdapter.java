@@ -46,6 +46,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             public void onClick(View v) {
 
                 Intent intent = new Intent(context,ShowDetailsActivity.class);
+                intent.putExtra("CONTACT_ID",contact.getContactId());
                 intent.putExtra("NAME",contact.getName());
                 intent.putExtra("PHONE_NO",contact.getPhoneNo());
 

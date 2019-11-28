@@ -51,7 +51,7 @@ public class AddContactActivity extends AppCompatActivity {
 
         DatabaseReference userRef = databaseReference.child("users").child(userId).child("contacts");
 
-        Contact contact = new Contact(name,phoneNo);
+        Contact contact = new Contact(userRef.push().getKey(),name,phoneNo);
 
         userRef.push().setValue(contact).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
