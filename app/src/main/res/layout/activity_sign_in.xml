@@ -16,14 +16,8 @@
         android:src="@drawable/login"></ImageView>
 
     <TextView
-        android:textColor="@color/textColorWhite"
-        style="@style/TextAppearance.AppCompat.Headline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:text="Sign In"
-        android:textSize="50dp"></TextView>
+        style="@style/HeadingTextStyle"
+        android:text="Sign In"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,16 +42,10 @@
             android:hint="Password"
             android:inputType="textPassword"></EditText>
 
-        <Button
-            style="@style/SignInBtnStyle"
-            android:onClick="signInBtnClickAction"
-            android:text="Sign In"
-            android:textAllCaps="false"></Button>
+        <Button style="@style/SignInBtnStyle"></Button>
 
     </LinearLayout>
 
-    <Button
-        style="@style/SignUpBtnStyle"
-        android:onClick="signUpBtnClickAction"
-        android:text="Sign Up"></Button>
+    <Button style="@style/SignUpBtnStyle"></Button>
+
 </LinearLayout>

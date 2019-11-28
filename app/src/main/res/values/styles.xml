@@ -13,8 +13,17 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="HeadingTextStyle">
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textSize">50dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="EditTextStyle">
         <item name="android:singleLine">true</item>
+        <item name="android:layout_margin">10dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/textColorWhite</item>
@@ -22,6 +31,8 @@
     </style>
 
     <style name="SignInBtnStyle">
+        <item name="android:onClick">signInBtnClickAction</item>
+        <item name="android:text">Sign In</item>
         <item name="android:background">@drawable/signinbtn_background</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textAllCaps">false</item>
@@ -31,6 +42,8 @@
     </style>
 
     <style name="SignUpBtnStyle">
+        <item name="android:onClick">signUpBtnClickAction</item>
+        <item name="android:text">Sign Up</item>
         <item name="android:background">@drawable/signupbtn_background</item>
         <item name="android:textSize">20sp</item>
         <item name="android:layout_marginRight">20dp</item>

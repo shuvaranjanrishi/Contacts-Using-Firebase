@@ -6,63 +6,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/defaultColor"
     android:padding="10dp"
+    android:gravity="center_horizontal"
     tools:context=".SignUpActivity">
 
-    <TextView
-        android:textSize="50dp"
-        style="@style/TextAppearance.AppCompat.Headline"
-        android:layout_marginBottom="100dp"
-        android:layout_gravity="center_horizontal"
-        android:text="Sign Up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></TextView>
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/login"></ImageView>
 
-    <TableLayout
+    <TextView
+        style="@style/HeadingTextStyle"
+        android:text="Sign Up"></TextView>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TableRow>
-            <TextView
-                android:textColor="#000000"
-                android:text="Name: "></TextView>
-            <EditText
-                android:singleLine="true"
-                android:id="@+id/nameETId"
-                android:hint="enter your name"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="2"></EditText>
-        </TableRow>
-        <TableRow android:layout_marginTop="10dp">
-            <TextView
-                android:textColor="#000000"
-                android:text="Email: "></TextView>
-            <EditText
-                android:singleLine="true"
-                android:id="@+id/emailETId"
-                android:hint="enter your email address"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="2"></EditText>
-        </TableRow>
-        <TableRow android:layout_marginTop="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:textColor="#000000"
-                android:text="Password: "></TextView>
-            <EditText
-                android:inputType="textPassword"
-                android:id="@+id/passwordETId"
-                android:hint="enter password"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"></EditText>
-        </TableRow>
-        <TableRow
-            android:gravity="center"
-            android:layout_marginTop="10dp">
-            <Button
-                android:onClick="SignUpBtnClickAction"
-                android:text="Sign Up"
-                android:textAllCaps="false"
-                android:layout_gravity="center"></Button>
-        </TableRow>
-    </TableLayout>
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/login_background"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:drawableLeft="@drawable/ic_person_black_24dp"
+            style="@style/EditTextStyle"
+            android:id="@+id/nameETId"
+            android:hint="Name"
+            android:layout_marginLeft="10dp"></EditText>
+
+        <EditText
+            style="@style/EditTextStyle"
+            android:id="@+id/emailETId"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
+            android:hint="Email"></EditText>
+
+        <EditText
+            android:id="@+id/passwordETId"
+            style="@style/EditTextStyle"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:hint="Password"
+            android:inputType="textPassword"></EditText>
+    </LinearLayout>
+
+    <Button style="@style/SignUpBtnStyle"></Button>
+
 </LinearLayout>

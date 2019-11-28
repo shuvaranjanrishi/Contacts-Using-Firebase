@@ -34,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
         initialize();
     }
 
-    public void SignUpBtnClickAction(View view) {
+    public void signUpBtnClickAction(View view) {
 
         String name = nameET.getText().toString().trim();
         String email = emailET.getText().toString().trim();
