@@ -50,6 +50,7 @@
             android:drawableLeft="@drawable/ic_lock_black_24dp"
             android:hint="Password"
             android:inputType="textPassword"></EditText>
+
     </LinearLayout>
 
     <Button style="@style/SignUpBtnStyle"></Button>
