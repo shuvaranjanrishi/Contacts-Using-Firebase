@@ -3,8 +3,10 @@ package com.example.contactsusingfirebase;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,15 +22,36 @@ import java.util.HashMap;
 public class AddContactActivity extends AppCompatActivity {
 
     private EditText nameET,phoneNoET;
+    private Button saveContactBtn;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+
+    private String contactIdIntent, name, phoneNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
+        setTitle("Create New Contact");
 
         initialize();
+
+        getDataFromIntent();
+    }
+
+    private void getDataFromIntent() {
+
+        contactIdIntent = getIntent().getStringExtra("CONTACT_ID");
+
+        if (contactIdIntent != null) {
+            name = getIntent().getStringExtra("NAME");
+            phoneNo = getIntent().getStringExtra("PHONE_NO");
+
+            nameET.setText(name);
+            phoneNoET.setText(phoneNo);
+            saveContactBtn.setText("Update Contact");
+            setTitle(name);
+        }
     }
 
     public void saveContactBtnAction(View view) {
@@ -38,9 +61,7 @@ public class AddContactActivity extends AppCompatActivity {
         if(!validate(name,phoneNo)){
             return;
         }else {
-
             insertData(name,phoneNo);
-
         }
 
     }
@@ -95,6 +116,7 @@ public class AddContactActivity extends AppCompatActivity {
     private void initialize() {
         nameET = findViewById(R.id.nameETId);
         phoneNoET = findViewById(R.id.phoneNoETId);
+        saveContactBtn = findViewById(R.id.saveContactBtnId);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }

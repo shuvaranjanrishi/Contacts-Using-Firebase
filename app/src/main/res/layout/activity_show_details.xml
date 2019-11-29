@@ -28,6 +28,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></TextView>
     <Button
+        android:onClick="editContactBtnClickAction"
+        android:background="#EE7D7D"
+        android:text="Edit Contact"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Button>
+    <Button
+        android:layout_marginTop="10dp"
         android:onClick="deleteBtnClickAction"
         android:background="#EE7D7D"
         android:text="Delete Contact"

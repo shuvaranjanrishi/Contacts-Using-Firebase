@@ -36,18 +36,19 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
         initialize();
 
-        getDataFromIntent();
+        getDataFromMainActivity();
 
         setData();
     }
 
     private void setData() {
+        Toast.makeText(this, ""+contactId, Toast.LENGTH_SHORT).show();
         setTitle(name);
         nameTV.setText(name);
         phoneNoTV.setText(phoneNo);
     }
 
-    private void getDataFromIntent() {
+    private void getDataFromMainActivity() {
         if (intent != null) {
             contactId = intent.getStringExtra("CONTACT_ID");
             name = intent.getStringExtra("NAME");
@@ -85,6 +86,14 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
     }
 
+    public void editContactBtnClickAction(View view) {
+        Intent intent = new Intent(ShowDetailsActivity.this,AddContactActivity.class);
+        intent.putExtra("CONTACT_ID",contactId);
+        intent.putExtra("NAME",name);
+        intent.putExtra("PHONE_NO",phoneNo);
+        startActivity(intent);
+    }
+
     private void deleteContact() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -113,4 +122,5 @@ public class ShowDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
 }
