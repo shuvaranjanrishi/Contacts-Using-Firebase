@@ -33,6 +33,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initialize();
 
@@ -42,8 +43,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
     }
 
     private void setData() {
-        Toast.makeText(this, ""+contactId, Toast.LENGTH_SHORT).show();
-        setTitle(name);
+        setTitle("Update "+name);
         nameTV.setText(name);
         phoneNoTV.setText(phoneNo);
     }
@@ -109,6 +109,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
+                                finish();
                                 Toast.makeText(ShowDetailsActivity.this, "Contact Delete Successfully", Toast.LENGTH_SHORT).show();
                             }
                         }
