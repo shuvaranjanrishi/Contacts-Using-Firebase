@@ -6,8 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:padding="10dp"
     tools:context=".AddContactActivity">
+
+    <ImageView
+        android:id="@+id/imageViewId"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="150dp"
+        android:layout_height="150dp"></ImageView>
+    <Button
+        android:text="Add Photo"
+        android:textAllCaps="false"
+        android:onClick="addPhotoBtnClickAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></Button>
 
     <TableLayout
         android:layout_width="match_parent"

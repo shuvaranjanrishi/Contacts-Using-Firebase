@@ -1,14 +1,19 @@
 package com.example.contactsusingfirebase;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,11 +31,13 @@ import java.util.HashMap;
 
 public class AddContactActivity extends AppCompatActivity {
 
+    private ImageView imageView;
     private EditText nameET, phoneNoET;
     private Button saveContactBtn;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
+    private Uri uri;
     private String contactIdIntent, name, phoneNo;
 
     @Override
@@ -129,6 +136,23 @@ public class AddContactActivity extends AppCompatActivity {
         });
     }
 
+    public void addPhotoBtnClickAction(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent,0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            if(requestCode == 0){
+                uri = data.getData();
+                imageView.setImageURI(uri);
+            }
+        }
+    }
+
     private boolean validate(String name, String phoneNo) {
 
         if (name.isEmpty()) {
@@ -152,6 +176,7 @@ public class AddContactActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        imageView = findViewById(R.id.imageViewId);
         nameET = findViewById(R.id.nameETId);
         phoneNoET = findViewById(R.id.phoneNoETId);
         saveContactBtn = findViewById(R.id.saveContactBtnId);
