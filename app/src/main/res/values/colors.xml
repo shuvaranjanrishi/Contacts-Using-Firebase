@@ -6,4 +6,5 @@
 
     <color name="defaultColor">#007469</color>
     <color name="textColorWhite">#ffffff</color>
+    <color name="btnColor">#3F51B5</color>
 </resources>
