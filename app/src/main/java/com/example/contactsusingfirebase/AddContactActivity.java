@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,19 +27,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class AddContactActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private EditText nameET, phoneNoET;
     private Button saveContactBtn;
+
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    private StorageReference storageReference;
 
     private Uri uri;
     private String contactIdIntent, name, phoneNo;
+    private String downloadlink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +127,8 @@ public class AddContactActivity extends AppCompatActivity {
 
         Contact contact = new Contact(contactId, name, phoneNo);
 
+        uploadImageToFirebaseStorage();
+
         userRef.child(contactId).setValue(contact).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -132,6 +142,34 @@ public class AddContactActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(AddContactActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void uploadImageToFirebaseStorage() {
+       // progressBar.setVisibility(View.VISIBLE);
+        StorageReference imageRef = storageReference.child("image"+ UUID.randomUUID());
+
+        imageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(AddContactActivity.this, "Image successfully uploaded", Toast.LENGTH_SHORT).show();
+                   // progressBar.setVisibility(View.GONE);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddContactActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+               // progressBar.setVisibility(View.GONE);
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                downloadlink = uri.toString();
+                //savetoDB(downloadlink);
+               // Picasso.get().load(downloadlink).into(imageView2);
             }
         });
     }
@@ -182,5 +220,6 @@ public class AddContactActivity extends AppCompatActivity {
         saveContactBtn = findViewById(R.id.saveContactBtnId);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
     }
 }
