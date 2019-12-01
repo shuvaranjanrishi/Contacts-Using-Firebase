@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -38,6 +41,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         final Contact contact = contactList.get(position);
 
+        Picasso.get().load(contact.getContactImage()).into(holder.imageView);
         holder.nameTV.setText(contact.getName());
         holder.phoneNoTV.setText(contact.getPhoneNo());
 
@@ -62,11 +66,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private ImageView imageView;
         private TextView nameTV,phoneNoTV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            imageView = itemView.findViewById(R.id.imageViewId);
             nameTV = itemView.findViewById(R.id.nameTVId);
             phoneNoTV = itemView.findViewById(R.id.phoneNoTVId);
         }

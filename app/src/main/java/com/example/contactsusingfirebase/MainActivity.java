@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private void getDataFromFirebase() {
         String userId = firebaseAuth.getCurrentUser().getUid();
         DatabaseReference contactsRef = databaseReference.child("users").child(userId).child("contacts");
-        String contactId = databaseReference.child("users").child(userId).child("contacts").push().getKey();
 
         contactsRef.addValueEventListener(new ValueEventListener() {
             @Override

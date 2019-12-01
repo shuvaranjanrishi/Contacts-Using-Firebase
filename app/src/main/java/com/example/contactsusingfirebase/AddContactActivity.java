@@ -143,11 +143,9 @@ public class AddContactActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 contactImage = uri.toString();
+                saveContactToFirebase(contactImage);
             }
         });
-
-
-        saveContactToFirebase(contactImage);
 
     }
 
