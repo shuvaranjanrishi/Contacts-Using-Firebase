@@ -30,13 +30,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.UUID;
 
 public class AddContactActivity extends AppCompatActivity {
 
-    private ImageView imageView;
+    private ImageView imageView,imageView2;
     private EditText nameET, phoneNoET;
     private Button saveContactBtn;
 
@@ -46,7 +47,7 @@ public class AddContactActivity extends AppCompatActivity {
 
     private Uri uri;
     private String contactIdIntent, name, phoneNo;
-    private String downloadlink;
+    private String contactImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,30 +76,32 @@ public class AddContactActivity extends AppCompatActivity {
     }
 
     public void saveContactBtnAction(View view) {
-        String name = nameET.getText().toString().trim();
-        String phoneNo = phoneNoET.getText().toString().trim();
+        name = nameET.getText().toString().trim();
+        phoneNo = phoneNoET.getText().toString().trim();
 
         if (!validate(name, phoneNo)) {
             return;
         } else {
+
             if (contactIdIntent != null) {
 
-                updateData(name,phoneNo);
+                //uploadImageToFirebaseStorage();
+               // updateData(contactImage, name,phoneNo);
 
             } else {
-                insertData(name, phoneNo);
+                insertDataToFirebase();
             }
         }
 
     }
 
-    private void updateData(String name, String phoneNo) {
+    private void updateData(String contactImageLink, String name, String phoneNo) {
 
         String userId = firebaseAuth.getCurrentUser().getUid();
 
         DatabaseReference userRef = databaseReference.child("users").child(userId).child("contacts").child(contactIdIntent);
 
-        Contact contact = new Contact(contactIdIntent, name, phoneNo);
+        Contact contact = new Contact(contactIdIntent, contactImageLink, name, phoneNo);
         
         userRef.setValue(contact).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -117,7 +120,38 @@ public class AddContactActivity extends AppCompatActivity {
         });
     }
 
-    private void insertData(String name, String phoneNo) {
+    private void insertDataToFirebase() {
+
+        // progressBar.setVisibility(View.VISIBLE);
+        StorageReference imageRef = storageReference.child("image"+ UUID.randomUUID());
+
+        imageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(AddContactActivity.this, "Image successfully uploaded", Toast.LENGTH_SHORT).show();
+                    // progressBar.setVisibility(View.GONE);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddContactActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                // progressBar.setVisibility(View.GONE);
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                contactImage = uri.toString();
+            }
+        });
+
+
+        saveContactToFirebase(contactImage);
+
+    }
+
+    private void saveContactToFirebase(String contactImage) {
 
         String userId = firebaseAuth.getCurrentUser().getUid();
 
@@ -125,9 +159,7 @@ public class AddContactActivity extends AppCompatActivity {
 
         String contactId = userRef.push().getKey();
 
-        Contact contact = new Contact(contactId, name, phoneNo);
-
-        uploadImageToFirebaseStorage();
+        Contact contact = new Contact(contactId,contactImage, name, phoneNo);
 
         userRef.child(contactId).setValue(contact).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -142,34 +174,6 @@ public class AddContactActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(AddContactActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void uploadImageToFirebaseStorage() {
-       // progressBar.setVisibility(View.VISIBLE);
-        StorageReference imageRef = storageReference.child("image"+ UUID.randomUUID());
-
-        imageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(AddContactActivity.this, "Image successfully uploaded", Toast.LENGTH_SHORT).show();
-                   // progressBar.setVisibility(View.GONE);
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AddContactActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-               // progressBar.setVisibility(View.GONE);
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                downloadlink = uri.toString();
-                //savetoDB(downloadlink);
-               // Picasso.get().load(downloadlink).into(imageView2);
             }
         });
     }
@@ -215,6 +219,7 @@ public class AddContactActivity extends AppCompatActivity {
 
     private void initialize() {
         imageView = findViewById(R.id.imageViewId);
+        imageView2 = findViewById(R.id.imageView2Id);
         nameET = findViewById(R.id.nameETId);
         phoneNoET = findViewById(R.id.phoneNoETId);
         saveContactBtn = findViewById(R.id.saveContactBtnId);

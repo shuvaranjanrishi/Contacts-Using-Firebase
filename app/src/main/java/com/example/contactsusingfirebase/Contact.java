@@ -3,6 +3,7 @@ package com.example.contactsusingfirebase;
 public class Contact {
 
     private String contactId;
+    private String contactImage;
     private String name;
     private String phoneNo;
 
@@ -10,19 +11,19 @@ public class Contact {
 
     }
 
-    public Contact(String contactId, String name, String phoneNo) {
+    public Contact(String contactId, String contactImage, String name, String phoneNo) {
         this.contactId = contactId;
-        this.name = name;
-        this.phoneNo = phoneNo;
-    }
-
-    public Contact(String name, String phoneNo) {
+        this.contactImage = contactImage;
         this.name = name;
         this.phoneNo = phoneNo;
     }
 
     public String getContactId() {
         return contactId;
+    }
+
+    public String getContactImage() {
+        return contactImage;
     }
 
     public String getName() {
