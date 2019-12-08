@@ -120,33 +120,29 @@ public class AddContactActivity extends AppCompatActivity {
         });
     }
 
-    private void insertDataToFirebase() {
+    private void insertDataToFirebase(){
 
         // progressBar.setVisibility(View.VISIBLE);
-        StorageReference imageRef = storageReference.child("image"+ UUID.randomUUID());
+        final StorageReference imageRef = storageReference.child("image"+ UUID.randomUUID());
 
-        imageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(AddContactActivity.this, "Image successfully uploaded", Toast.LENGTH_SHORT).show();
-                    // progressBar.setVisibility(View.GONE);
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+        imageRef.putFile(uri).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(AddContactActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 // progressBar.setVisibility(View.GONE);
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                contactImage = uri.toString();
-                saveContactToFirebase(contactImage);
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        contactImage = uri.toString();
+                        saveContactToFirebase(contactImage);
+                    }
+                });
             }
         });
-
     }
 
     private void saveContactToFirebase(String contactImage) {
