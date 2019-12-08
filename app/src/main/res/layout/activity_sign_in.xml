@@ -32,12 +32,14 @@
             android:id="@+id/emailETId"
             android:layout_margin="10dp"
             android:drawableLeft="@drawable/ic_email_black_24dp"
+            android:text="you@gmail.com"
             android:hint="Email"></EditText>
 
         <EditText
             android:id="@+id/passwordETId"
             style="@style/EditTextStyle"
             android:layout_margin="10dp"
+            android:text="you@gmail.com"
             android:drawableLeft="@drawable/ic_lock_black_24dp"
             android:hint="Password"
             android:inputType="textPassword"></EditText>
